@@ -1,16 +1,15 @@
 import 'package:ai_notes/auth/auth_service.dart';
 import 'package:ai_notes/screens/signupScreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class Loginscreen extends StatefulWidget {
-  const Loginscreen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<Loginscreen> createState() => _LoginscreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginscreenState extends State<Loginscreen> {
+class _LoginScreenState extends State<LoginScreen> {
   // get auth service
   final authService = AuthService();
 
@@ -46,9 +45,13 @@ class _LoginscreenState extends State<Loginscreen> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Signupscreen()),
+                MaterialPageRoute(builder: (context) => const Signupscreen()),
               );
             },
+            child: Text(
+              "Don't have an account? Sign up",
+              style: TextStyle(color: Colors.blue),
+            ),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:ai_notes/auth/auth_service.dart';
+import 'package:ai_notes/screens/LoginScreen.dart';
 import 'package:flutter/material.dart';
 
 class Signupscreen extends StatefulWidget {
@@ -13,13 +14,24 @@ class _SignupscreenState extends State<Signupscreen> {
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
 
   void register() async {
     final email = _emailController.text;
     final password = _passwordController.text;
+    final confirmPassword = _confirmPasswordController.text;
+
+    if (password != confirmPassword) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Passwords do not match')));
+      return;
+    }
 
     try {
       await authService.signup(email, password);
+
+      Navigator.pop(context);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -36,14 +48,16 @@ class _SignupscreenState extends State<Signupscreen> {
         children: [
           TextField(controller: _emailController),
           TextField(controller: _passwordController),
-          ElevatedButton(onPressed: register, child: Text('Sign Up')),
+          TextField(controller: _confirmPasswordController),
+          ElevatedButton(onPressed: register, child: Text('Register')),
           GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Signupscreen()),
-              );
+              Navigator.pop(context);
             },
+            child: Text(
+              "Have an account? Sign in",
+              style: TextStyle(color: Colors.blue),
+            ),
           ),
         ],
       ),
