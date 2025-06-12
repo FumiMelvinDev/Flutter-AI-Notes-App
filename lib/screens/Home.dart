@@ -1,3 +1,4 @@
+import 'package:ai_notes/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -8,8 +9,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final authService = AuthService();
+
+  void logout() async {
+    await authService.sighOut();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: IconButton(onPressed: logout, icon: Icon(Icons.logout)),
+    );
   }
 }
