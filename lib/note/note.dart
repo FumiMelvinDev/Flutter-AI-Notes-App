@@ -1,4 +1,4 @@
-import 'package:uuid/uuid.dart'; // Add this import
+import 'package:uuid/uuid.dart';
 
 class Note {
   String? id;
