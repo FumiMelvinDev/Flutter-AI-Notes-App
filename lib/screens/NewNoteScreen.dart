@@ -18,32 +18,74 @@ class _NewnotescreenState extends State<Newnotescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('New Note'),
+        backgroundColor: Colors.transparent,
+        foregroundColor: Theme.of(context).colorScheme.inversePrimary,
+        elevation: 2,
+      ),
       body: SafeArea(
-        child: Column(
-          children: [
-            TextField(controller: noteController),
-            Row(
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    noteController.clear();
-                  },
-                  child: Text('Cancel'),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            children: [
+              Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
                 ),
-                TextButton(
-                  onPressed: () async {
-                    final newNote = Note(text: noteController.text);
-                    await notesDatabase.createNote(newNote);
-
-                    Navigator.pop(context);
-                    noteController.clear();
-                  },
-                  child: Text('Save'),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: TextField(
+                    controller: noteController,
+                    maxLines: 25,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Write your note...',
+                    ),
+                    style: TextStyle(fontSize: 18),
+                  ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      noteController.clear();
+                    },
+                    style: TextButton.styleFrom(
+                      foregroundColor: Theme.of(
+                        context,
+                      ).colorScheme.inversePrimary,
+                    ),
+                    child: Text('Cancel'),
+                  ),
+                  const SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: () async {
+                      if (noteController.text.trim().isEmpty) return;
+                      final newNote = Note(text: noteController.text.trim());
+                      await notesDatabase.createNote(newNote);
+                      if (!mounted) return;
+                      Navigator.pop(context);
+                      noteController.clear();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.deepPurple,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: Text('Save'),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
