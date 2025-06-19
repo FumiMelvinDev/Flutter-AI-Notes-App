@@ -13,10 +13,13 @@ class NoteDatabase {
   }
 
   // READ
-  final stream = Supabase.instance.client
-      .from('Note')
-      .stream(primaryKey: ['id'])
-      .map((data) => data.map((noteMap) => Note.fromMap(noteMap)).toList());
+  Stream<List<Note>> notesForUser(String userId) {
+    return Supabase.instance.client
+        .from('Note')
+        .stream(primaryKey: ['id'])
+        .eq('authorId', userId)
+        .map((data) => data.map((noteMap) => Note.fromMap(noteMap)).toList());
+  }
 
   // Update
   Future updateNote(Note oldNote, String newText) async {

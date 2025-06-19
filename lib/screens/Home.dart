@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:popover/popover.dart';
 import 'package:provider/provider.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -33,6 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId == null) {
+      return const Scaffold(body: Center(child: Text('Not logged in')));
+    }
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
@@ -142,9 +148,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: StreamBuilder(
-        stream: notesDatabase.stream,
-
+      body: StreamBuilder<List<Note>>(
+        stream: notesDatabase.notesForUser(userId),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -203,7 +208,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onTap: () {
                                         deleteNote(note);
                                       },
-
                                       leading: Icon(Icons.delete_outline),
                                     ),
                                   ],

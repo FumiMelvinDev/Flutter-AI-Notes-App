@@ -36,6 +36,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -67,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     'Welcome Back !',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black54,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -91,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: 20),
                 TextField(
                   controller: _passwordController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -134,7 +137,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       TextSpan(
                         text: "Don't have an account? ",
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
                       ),
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
@@ -150,7 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             "Sign up",
                             style: TextStyle(
-                              color: Colors.black54,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.inversePrimary,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),

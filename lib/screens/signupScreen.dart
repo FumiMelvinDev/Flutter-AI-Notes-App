@@ -12,7 +12,7 @@ class Signupscreen extends StatefulWidget {
 class _SignupscreenState extends State<Signupscreen> {
   final authService = AuthService();
 
-  final TextEditingController _nameController = TextEditingController();
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
@@ -46,6 +46,8 @@ class _SignupscreenState extends State<Signupscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.surface,
+
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -77,14 +79,14 @@ class _SignupscreenState extends State<Signupscreen> {
                     'Welcome Sign Up',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Colors.black54,
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
                 SizedBox(height: 20),
                 TextField(
-                  controller: _emailController,
+                  controller: _nameController,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -117,6 +119,7 @@ class _SignupscreenState extends State<Signupscreen> {
                 SizedBox(height: 20),
                 TextField(
                   controller: _passwordController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -132,7 +135,8 @@ class _SignupscreenState extends State<Signupscreen> {
                 ),
                 SizedBox(height: 20),
                 TextField(
-                  controller: _emailController,
+                  controller: _confirmPasswordController,
+                  obscureText: true,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey),
@@ -176,7 +180,10 @@ class _SignupscreenState extends State<Signupscreen> {
                     children: [
                       TextSpan(
                         text: "Have an account? ",
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
                       ),
                       WidgetSpan(
                         alignment: PlaceholderAlignment.middle,
@@ -192,7 +199,9 @@ class _SignupscreenState extends State<Signupscreen> {
                           child: Text(
                             "Sign in",
                             style: TextStyle(
-                              color: Colors.black54,
+                              color: Theme.of(
+                                context,
+                              ).colorScheme.inversePrimary,
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             ),

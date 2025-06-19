@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ai_notes/ai/ai_service.dart';
 import 'package:ai_notes/note/note_database.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AskAIScreen extends StatefulWidget {
   const AskAIScreen({super.key});
@@ -28,8 +29,22 @@ class _AskAIScreenState extends State<AskAIScreen> {
       questionController.clear();
     });
 
-    // Fetch notes from Supabase
-    final notesResult = await notesDatabase.database.select();
+    // Get current user ID
+    final userId = Supabase.instance.client.auth.currentUser?.id;
+    if (userId == null) {
+      setState(() {
+        messages.add(_ChatMessage(text: 'Not logged in.', isUser: false));
+        loading = false;
+      });
+      _scrollToBottom();
+      return;
+    }
+
+    // Fetch only notes for this user
+    final notesResult = await notesDatabase.database.select().eq(
+      'authorId',
+      userId,
+    );
     final notes = notesResult
         .map(
           (n) => {
