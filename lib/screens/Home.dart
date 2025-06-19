@@ -1,6 +1,7 @@
 import 'package:ai_notes/auth/auth_service.dart';
 import 'package:ai_notes/note/note.dart';
 import 'package:ai_notes/note/note_database.dart';
+import 'package:ai_notes/screens/AskAI.dart';
 import 'package:ai_notes/screens/EditNote.dart';
 import 'package:ai_notes/screens/NewNoteScreen.dart';
 import 'package:ai_notes/theme/theme_provider.dart';
@@ -103,7 +104,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               leading: Icon(Icons.home),
-              onTap: () => Navigator.pop(context),
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AskAIScreen()),
+              ),
             ),
             ListTile(
               title: Text(
