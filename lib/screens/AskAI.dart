@@ -116,7 +116,7 @@ class _AskAIScreenState extends State<AskAIScreen> {
                           ? Theme.of(
                               context,
                             ).colorScheme.primary.withOpacity(0.8)
-                          : Colors.grey[200],
+                          : Theme.of(context).colorScheme.primary,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: SelectableText(
@@ -124,7 +124,7 @@ class _AskAIScreenState extends State<AskAIScreen> {
                       style: TextStyle(
                         color: msg.isUser
                             ? Theme.of(context).colorScheme.inversePrimary
-                            : Colors.black87,
+                            : Theme.of(context).colorScheme.inversePrimary,
                       ),
                     ),
                   ),
